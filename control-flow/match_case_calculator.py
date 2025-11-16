@@ -15,60 +15,19 @@ def main():
     num2 = get_number("Enter the second number: ")
     op = input("Choose the operation (+, -, *, /): ").strip()
 
-    match op:
-        case "+":
-            print(f"The result is {num1 + num2}.")
-        case "-":
-            print(f"The result is {num1 - num2}.")
-        case "*":
-            print(f"The result is {num1 * num2}.")
-        case "/":
-            try:
-                print(f"The result is {num1 / num2}.")
-            except ZeroDivisionError:
-                print("Cannot divide by zero.")
-        case _:
-            print("Invalid operation.")
+    if op == "+":
+        print(f"The result is {num1 + num2}.")
+    elif op == "-":
+        print(f"The result is {num1 - num2}.")
+    elif op == "*":
+        print(f"The result is {num1 * num2}.")
+    elif op == "/":
+        if num2 == 0:
+            print("Cannot divide by zero.")
+        else:
+            print(f"The result is {num1 / num2}.")
+    else:
+        print("Invalid operation. Please choose one of: +, -, *, /")
 
 if __name__ == "__main__":
     main()
-:R
-vim -r match_case_calculator.py
-
-#!/usr/bin/env python3
-
-def get_number(prompt: str):
-    while True:
-        s = input(prompt).strip()
-        try:
-            if '.' in s:
-                return float(s)
-            return int(s)
-        except ValueError:
-            print("Please enter a valid number.")
-
-def main():
-    num1 = get_number("Enter the first number: ")
-    num2 = get_number("Enter the second number: ")
-    op = input("Choose the operation (+, -, *, /): ").strip()
-
-    match op:
-        case "+":
-            print(f"The result is {num1 + num2}.")
-        case "-":
-            print(f"The result is {num1 - num2}.")
-        case "*":
-            print(f"The result is {num1 * num2}.")
-        case "/":
-            try:
-                print(f"The result is {num1 / num2}.")
-            except ZeroDivisionError:
-                print("Cannot divide by zero.")
-        case _:
-            print("Invalid operation.")
-
-if __name__ == "__main__":
-    main()
-:R
-vim -r match_case_calculator.py
-
