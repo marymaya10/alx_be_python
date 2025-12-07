@@ -39,3 +39,101 @@ class Library:
     def list_books(self):
         for book in self.books:
             print(book)
+# Base Class - Account
+class Account:
+    def __init__(self, account_number, holder_name, balance=0):
+        self.account_number = account_number
+        self.holder_name = holder_name
+        self.balance = balance
+
+    def deposit(self, amount):
+        self.balance += amount
+
+    def withdraw(self, amount):
+        if amount <= self.balance:
+            self.balance -= amount
+            return True
+        return False
+
+    def __str__(self):
+        return f"Account {self.account_number}: {self.holder_name}, Balance: ${self.balance}"
+
+
+# Derived Class - SavingsAccount
+class SavingsAccount(Account):
+    def __init__(self, account_number, holder_name, balance=0, interest_rate=0.02):
+        super().__init__(account_number, holder_name, balance)
+        self.interest_rate = interest_rate
+
+    def add_interest(self):
+        self.balance += self.balance * self.interest_rate
+
+    def __str__(self):
+        return f"SavingsAccount {self.account_number}: {self.holder_name}, Balance: ${self.balance}, Interest Rate: {self.interest_rate*100}%"
+
+
+# Derived Class - CheckingAccount
+class CheckingAccount(Account):
+    def __init__(self, account_number, holder_name, balance=0, overdraft_limit=100):
+        super().__init__(account_number, holder_name, balance)
+        self.overdraft_limit = overdraft_limit
+
+    def withdraw(self, amount):
+        if amount <= self.balance + self.overdraft_limit:
+            self.balance -= amount
+            return True
+        return False
+
+    def __str__(self):
+        return f"CheckingAccount {self.account_number}: {self.holder_name}, Balance: ${self.balance}, Overdraft Limit: ${self.overdraft_limit}"
+
+
+# Composition - Bank
+class Bank:
+    def __init__(self):
+        self.accounts = []  # list to store any Account type
+
+    def add_account(self, account):
+        self.accounts.append(account)
+
+    def list_accounts(self):
+        for account in self.accounts:
+            print(account)
+
+
+# Example usage for Bank
+if __name__ == "__main__":
+    # Library example (already above)
+
+    # Bank example
+    bank = Bank()
+
+    # Add accounts
+    savings = SavingsAccount("SA001", "Alice", 1000, 0.03)
+    checking = CheckingAccount("CA001", "Bob", 500, 200)
+
+    bank.add_account(savings)
+    bank.add_account(checking)
+
+    # Perform operations
+    savings.deposit(200)
+    checking.withdraw(100)
+
+    # List all accounts
+    bank.list_accounts()
+
+# Example usage
+if __name__ == "__main__":
+    library = Library()
+
+    # Add books
+    book1 = Book("1984", "George Orwell")
+    ebook1 = EBook("Digital Fortress", "Dan Brown", 1200)
+    printbook1 = PrintBook("The Great Gatsby", "F. Scott Fitzgerald", 180)
+
+    library.add_book(book1)
+    library.add_book(ebook1)
+    library.add_book(printbook1)
+
+    # List all books
+    library.list_books()
